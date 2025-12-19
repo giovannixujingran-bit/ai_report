@@ -1,0 +1,644 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+
+:root {
+    --bg-color: #000;
+    --text-color: #fff;
+    --accent-color: #ff3333;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Lato', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    overflow: hidden;
+    /* Prevent normal scroll */
+}
+
+.report-container {
+    height: 100vh;
+    overflow-y: scroll;
+    /* scroll-snap-type: y mandatory; Removed for smoother scroll */
+    scroll-behavior: smooth;
+}
+
+section {
+    height: 100vh;
+    width: 100vw;
+    /* scroll-snap-align: start; Removed */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+h1 {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+h2 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.5rem;
+}
+
+p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 2rem;
+}
+
+/* Slide Specifics */
+.slide-cover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://loremflickr.com/1600/900/fashion,runway');
+    text-align: center;
+}
+
+.slide-toc {
+    background-color: #111;
+    align-items: flex-start;
+}
+
+.toc-list {
+    list-style: none;
+}
+
+.toc-list li {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.toc-list li:hover {
+    color: var(--accent-color);
+    padding-left: 1rem;
+}
+
+.slide-content {
+    background-color: #0a0a0a;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+}
+
+.content-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.content-text {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.slide-summary {
+    background-color: var(--accent-color);
+    color: white;
+    text-align: center;
+}
+
+/* Navigation Hint */
+.scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0) translateX(-50%);
+    }
+
+    40% {
+        transform: translateY(-10px) translateX(-50%);
+    }
+
+    60% {
+        transform: translateY(-5px) translateX(-50%);
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3rem;
+    }
+
+    .slide-content {
+        grid-template-columns: 1fr;
+    }
+
+    .content-image {
+        height: 40%;
+    }
+
+    .content-text {
+        height: 60%;
+        padding: 2rem;
+    }
+}
+
+/* Cyberpunk Section Special Layout */
+#trend1 {
+    display: block;
+    padding: 0;
+    overflow: hidden;
+    /* Critical for containing the slanted grid */
+    position: relative;
+    background: #000;
+}
+
+.cyber-scroll-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.cyber-track {
+    display: flex;
+    gap: 15px;
+    width: min-content;
+    /* Ensure it fits all children horizontally */
+    animation: cyber-scroll 30s linear infinite;
+}
+
+.cyber-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes cyber-scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-50% - 7.5px));
+        /* Slide half width (gap included approx) */
+    }
+}
+
+.cyber-item {
+    position: relative;
+    overflow: hidden;
+    width: 300px;
+    /* Fixed width for carousel items */
+    height: 100vh;
+    /* Fill vertical height of the track */
+    flex-shrink: 0;
+}
+
+.cyber-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%) contrast(120%);
+    transition: all 0.5s;
+}
+
+.cyber-item:hover img {
+    filter: none;
+    transform: scale(1.1);
+}
+
+.cyber-overlay {
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    z-index: 100;
+    /* Higher than grid */
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2rem;
+    border-left: 4px solid #0ff;
+    max-width: 400px;
+    pointer-events: auto;
+    /* Enable clicks for editing text inside */
+    backdrop-filter: blur(5px);
+}
+
+.cyber-overlay h3 {
+    color: #0ff;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.cyber-overlay p {
+    color: #fff;
+    font-size: 1rem;
+    font-family: monospace;
+    line-height: 1.4;
+}
+
+/* Editor Toolbar */
+#editor-toolbar {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+#editor-toolbar button {
+    padding: 0.5rem 1rem;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+#editor-toolbar button:hover {
+    background: #555;
+}
+
+#editor-toolbar button.active {
+    background: var(--accent-color);
+}
+
+/* Edit Mode Indicators */
+.editable {
+    cursor: move;
+    transition: outline 0.2s;
+}
+
+.edit-mode-active .editable:hover {
+    outline: 2px dashed var(--accent-color);
+    outline-offset: 4px;
+}
+
+.edit-mode-active [contenteditable="true"]:focus {
+    outline: 2px solid #0ff;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Instructions in toolbar */
+#editor-toolbar::after {
+    content: "Tip: Hold 'Shift' to Drag | Double-click Img to Replace";
+    color: #aaa;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+}
+
+/* Ensure images don't overflow their grid cells */
+.slide-content,
+.cyber-item {
+    overflow: hidden;
+}
+
+/* Eco Minimalism Section Special Layout */
+/* Eco Minimalism Minimalist Layout */
+#trend2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #f3f0eb;
+    /* Warm minimalist beige */
+    color: #4a4a4a;
+    overflow: hidden;
+    padding: 0;
+}
+
+.minimal-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    width: 85%;
+    max-width: 1400px;
+    height: 80vh;
+}
+
+.minimal-text-content {
+    flex: 1;
+    text-align: left;
+    padding-right: 2rem;
+}
+
+.minimal-text-content h3 {
+    font-size: 3.5rem;
+    color: #2c2c2c;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    border-bottom: none;
+    /* Remove default underline style from h3 globally if needed, or override here */
+}
+
+.separator-line {
+    width: 80px;
+    height: 1px;
+    background-color: #8c8c8c;
+    margin-bottom: 2.5rem;
+}
+
+.minimal-text-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    font-family: var(--font-body);
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+}
+
+/* 4-Image Grid */
+.minimal-image-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1.5rem;
+    height: 100%;
+}
+
+/* One-Click Redesign Interactive Styles */
+.minimal-img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.minimal-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.minimal-img-wrapper:hover img {
+    transform: scale(1.05);
+}
+
+.redesign-btn {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #333;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: inherit;
+    z-index: 10;
+}
+
+.minimal-img-wrapper:hover .redesign-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.redesign-btn:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+.generating-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 20;
+}
+
+.generating-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.generating-overlay span {
+    margin-top: 10px;
+    color: #333;
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #ddd;
+    border-top: 3px solid #333;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .minimal-container {
+        flex-direction: column;
+        height: auto;
+        padding: 4rem 0;
+    }
+
+    .minimal-text-content {
+        order: 2;
+        padding-right: 0;
+    }
+
+    .minimal-image-grid {
+        order: 1;
+        width: 100%;
+        height: 50vh;
+    }
+
+    .minimal-text-content h3 {
+        font-size: 2.5rem;
+    }
+}
+
+/* Digital Gradient Section - Process Flow */
+#trend3 {
+    position: relative;
+    background-color: #050505;
+    background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    overflow: hidden;
+}
+
+.corner-title {
+    position: absolute;
+    top: 4rem;
+    left: 4rem;
+    font-size: 3rem;
+    /* Slightly smaller than main headers to fit corner */
+    z-index: 10;
+    color: #fff;
+    border-bottom: 2px solid transparent;
+    background: linear-gradient(90deg, #ff00cc, #333399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: var(--font-heading);
+}
+
+.process-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 90%;
+    max-width: 1600px;
+    height: 70vh;
+}
+
+.process-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    justify-content: flex-start;
+}
+
+.step-label {
+    font-family: monospace;
+    color: #888;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.step-image {
+    width: 100%;
+    height: 60%;
+    /* Occupy most vertical space */
+    margin-bottom: 1.5rem;
+    border: 1px solid #333;
+    overflow: hidden;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.step-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: opacity 0.4s ease, transform 0.6s ease;
+}
+
+.process-step:hover .step-image {
+    transform: translateY(-10px);
+    border-color: #ff00cc;
+}
+
+.process-step:hover .step-image img {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.step-desc {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.5;
+    max-width: 90%;
+}
+
+.process-arrow {
+    font-size: 3rem;
+    color: #444;
+    font-family: Arial, sans-serif;
+    font-weight: 100;
+    padding-bottom: 5rem;
+    /* Align vaguely with image center */
+}
+
+@media (max-width: 900px) {
+    .process-container {
+        flex-direction: column;
+        height: auto;
+        padding: 6rem 0;
+        /* Space for top title */
+    }
+
+    .process-arrow {
+        transform: rotate(90deg);
+        padding: 1rem 0;
+    }
+
+    .step-image {
+        height: 300px;
+    }
+}
